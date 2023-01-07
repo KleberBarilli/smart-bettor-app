@@ -9,6 +9,7 @@ import {
     UserInfo,
     UserName,
     UserWrapper,
+    Icon,
 } from "./styles";
 import avatarDefault from "../../assets/avatar1.png";
 
@@ -26,6 +27,7 @@ export const Home: React.FunctionComponent = () => {
                             <UserName>Kleber</UserName>
                         </UserInfoDetail>
                     </UserInfo>
+                    <Icon name="log-out" />
                 </UserWrapper>
             </Header>
         </Container>
