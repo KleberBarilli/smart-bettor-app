@@ -1,0 +1,10 @@
+{
+  "expo": {
+    "name": "smart-bettor-app",
+    "slug": "smart-bettor-app",
+    "version": "1.0.0",
+    "assetBundlePatterns": [
+      "**/*"
+    ]
+  }
+}
