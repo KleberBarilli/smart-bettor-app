@@ -1,5 +1,6 @@
 import React from "react";
 import { ThemeProvider } from "styled-components/native";
+import { NavigationContainer } from "@react-navigation/native";
 import { Home } from "./src/pages/home";
 import theme from "./src/global/styles/theme";
 import AppLoading from "expo-app-loading";
@@ -18,10 +19,12 @@ const App: React.FunctionComponent = () => {
         return <AppLoading />;
     }
     return (
-        <ThemeProvider theme={theme}>
-            {/* <Home /> */}
-            <SignUp />
-        </ThemeProvider>
+        <NavigationContainer>
+            <ThemeProvider theme={theme}>
+                {/* <Home /> */}
+                <SignUp />
+            </ThemeProvider>
+        </NavigationContainer>
     );
 };
 
