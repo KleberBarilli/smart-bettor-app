@@ -1,7 +1,8 @@
 import React from "react";
 import { ScrollView } from "react-native";
-import { Input } from "../../../components/form/input";
-import { Button } from "../../../components/form/input/button";
+import { Input } from "../../components/form/input";
+import { Button } from "../../components/form/input/button";
+import theme from "../../global/styles/theme";
 import { Content, Title, Container } from "./styles";
 
 export const SignIn: React.FunctionComponent = () => {
