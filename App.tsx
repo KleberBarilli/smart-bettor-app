@@ -8,7 +8,7 @@ import {
     Roboto_400Regular,
     Roboto_700Bold,
 } from "@expo-google-fonts/roboto";
-import { SignIn } from "./src/pages/home/signIn";
+import { SignIn } from "./src/pages/signIn";
 
 const App: React.FunctionComponent = () => {
     const [isFontsLoaded] = useFonts({ Roboto_400Regular, Roboto_700Bold });
