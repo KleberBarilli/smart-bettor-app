@@ -2,7 +2,7 @@ import React from "react";
 import { KeyboardAvoidingView, ScrollView, Platform, View } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { Input } from "../../components/form/input";
-import { Button } from "../../components/form/input/button";
+import { Button } from "../../components/form/button";
 import {
     Content,
     Title,
