@@ -2,6 +2,8 @@ import React from "react";
 import { KeyboardAvoidingView, ScrollView, Platform, View } from "react-native";
 import { useForm, FieldValues } from "react-hook-form";
 import { useNavigation } from "@react-navigation/native";
+import { yupResolver } from "@hookform/resolvers/yup";
+import * as yup from "yup";
 import { InputControl } from "../../components/form/inputControl";
 import { Button } from "../../components/form/button";
 import {
@@ -23,8 +25,23 @@ interface IFormInputs {
     [name: string]: any;
 }
 
+const formSchema = yup.object({
+    name: yup.string().required("O nome é obrigatório"),
+    email: yup
+        .string()
+        .email("Email inválido")
+        .required("O email é obrigatório"),
+    password: yup.string().required("A senha é obrigatória"),
+});
+
 export const SignUp: React.FunctionComponent = () => {
-    const { control, handleSubmit } = useForm<FieldValues>();
+    const {
+        control,
+        handleSubmit,
+        formState: { errors },
+    } = useForm<FieldValues>({
+        resolver: yupResolver(formSchema),
+    });
 
     const { goBack } = useNavigation<ScreenNavigationProp>();
 
@@ -59,6 +76,7 @@ export const SignUp: React.FunctionComponent = () => {
                             placeholder="Nome Completo"
                             name="name"
                             autoCorrect={false}
+                            error={errors.name && errors.name.message}
                         />
                         <InputControl
                             autoCapitalize="none"
@@ -67,6 +85,7 @@ export const SignUp: React.FunctionComponent = () => {
                             name="email"
                             placeholder="Email"
                             keyboardType="email-address"
+                            error={errors.email && errors.email.message}
                         />
                         <InputControl
                             control={control}
@@ -74,6 +93,7 @@ export const SignUp: React.FunctionComponent = () => {
                             placeholder="Senha"
                             autoCorrect={false}
                             secureTextEntry
+                            error={errors.password && errors.password.message}
                         />
                         <Button title="Cadastrar" />
                     </Content>
