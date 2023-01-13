@@ -76,7 +76,9 @@ export const SignUp: React.FunctionComponent = () => {
                             placeholder="Nome Completo"
                             name="name"
                             autoCorrect={false}
-                            error={errors.name && errors.name.message}
+                            error={
+                                errors.name && (errors.name.message as string)
+                            }
                         />
                         <InputControl
                             autoCapitalize="none"
@@ -85,7 +87,9 @@ export const SignUp: React.FunctionComponent = () => {
                             name="email"
                             placeholder="Email"
                             keyboardType="email-address"
-                            error={errors.email && errors.email.message}
+                            error={
+                                errors.email && (errors.email.message as string)
+                            }
                         />
                         <InputControl
                             control={control}
@@ -93,7 +97,10 @@ export const SignUp: React.FunctionComponent = () => {
                             placeholder="Senha"
                             autoCorrect={false}
                             secureTextEntry
-                            error={errors.password && errors.password.message}
+                            error={
+                                errors.password &&
+                                (errors.password.message as string)
+                            }
                         />
                         <Button title="Cadastrar" />
                     </Content>

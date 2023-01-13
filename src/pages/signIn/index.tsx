@@ -79,7 +79,10 @@ export const SignIn: React.FunctionComponent = () => {
                                 name="email"
                                 placeholder="Email"
                                 keyboardType="email-address"
-                                error={errors.email && errors.email.message}
+                                error={
+                                    errors.email &&
+                                    (errors.email.message as string)
+                                }
                             />
                             <InputControl
                                 control={control}
@@ -88,12 +91,13 @@ export const SignIn: React.FunctionComponent = () => {
                                 autoCorrect={false}
                                 secureTextEntry
                                 error={
-                                    errors.password && errors.password.message
+                                    errors.password &&
+                                    (errors.password.message as string)
                                 }
                             />
                             <Button
                                 title="Entrar"
-                                onPress={() => handleSubmit(handleSignIn)}
+                                onPress={handleSubmit(handleSignIn)}
                             />
 
                             <ForgotPasswordButton>
