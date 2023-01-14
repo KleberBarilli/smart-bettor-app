@@ -50,10 +50,11 @@ export const AuthProvider: React.FunctionComponent<IProps> = ({ children }) => {
                 password,
             });
             const { token, user } = response.data;
+            await Promise.all([
+                AsyncStorage.setItem(tokenData, token),
+                AsyncStorage.setItem(userData, JSON.stringify(user)),
+            ]);
 
-            console.log(response.data);
-            await AsyncStorage.setItem(tokenData, token);
-            await AsyncStorage.setItem(userData, JSON.stringify(user));
             setData({ token, user });
         } catch (error) {
             Alert.alert("Erro ao logar", "Verifique seus dados");

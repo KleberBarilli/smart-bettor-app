@@ -66,7 +66,6 @@ export const SignIn: React.FunctionComponent = () => {
 
         try {
             signIn(data);
-            Alert.alert("Ok", "Sucesso");
         } catch (error) {
             Alert.alert("Erro ao logar", "Verifique seus dados");
         }
