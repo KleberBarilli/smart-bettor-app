@@ -102,7 +102,10 @@ export const SignUp: React.FunctionComponent = () => {
                                 (errors.password.message as string)
                             }
                         />
-                        <Button title="Cadastrar" />
+                        <Button
+                            title="Cadastrar"
+                            onPress={handleSubmit(handleSignIn)}
+                        />
                     </Content>
                 </Container>
             </ScrollView>
