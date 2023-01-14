@@ -1,9 +1,17 @@
 import React from "react";
-import { KeyboardAvoidingView, ScrollView, Platform, View } from "react-native";
+import {
+    KeyboardAvoidingView,
+    ScrollView,
+    Platform,
+    View,
+    Alert,
+} from "react-native";
 import { useForm, FieldValues } from "react-hook-form";
 import { useNavigation } from "@react-navigation/native";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
+
+import { api } from "../../services/api";
 import { InputControl } from "../../components/form/inputControl";
 import { Button } from "../../components/form/button";
 import {
@@ -45,13 +53,21 @@ export const SignUp: React.FunctionComponent = () => {
 
     const { goBack } = useNavigation<ScreenNavigationProp>();
 
-    const handleSignIn = (form: IFormInputs) => {
+    const handleSignUp = async (form: IFormInputs) => {
         const data = {
             name: form.name,
             email: form.email,
             password: form.password,
         };
-        console.log(data);
+        try {
+            await api.post("/customer", data);
+            Alert.alert(
+                "Cadastro realizado",
+                "Enviamos um link de confirmação para o seu email",
+            );
+        } catch (error) {
+            Alert.alert("Erro ao cadastrar", "Ocorreu um erro ao se cadastrar");
+        }
     };
 
     return (
@@ -104,7 +120,7 @@ export const SignUp: React.FunctionComponent = () => {
                         />
                         <Button
                             title="Cadastrar"
-                            onPress={handleSubmit(handleSignIn)}
+                            onPress={handleSubmit(handleSignUp)}
                         />
                     </Content>
                 </Container>
