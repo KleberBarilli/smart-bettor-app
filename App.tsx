@@ -10,7 +10,7 @@ import {
 } from "@expo-google-fonts/roboto";
 
 import { Routes } from "./src/routes";
-import { AuthContext, AuthProvider } from "./src/context/authContext";
+import { AuthProvider } from "./src/context/authContext";
 import { StatusBar } from "react-native";
 
 const App: React.FunctionComponent = () => {
