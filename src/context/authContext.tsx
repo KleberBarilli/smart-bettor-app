@@ -16,6 +16,7 @@ interface ICredentials {
 interface IAuthContext {
     user: IUser;
     signIn(credentials: ICredentials): void;
+    signOut(): void;
 }
 
 interface IProps {
@@ -58,9 +59,18 @@ export const AuthProvider: React.FunctionComponent<IProps> = ({ children }) => {
             Alert.alert("Erro ao logar", "Verifique seus dados");
         }
     };
+    const signOut = async () => {
+        try {
+            await AsyncStorage.removeItem(tokenData);
+            await AsyncStorage.removeItem(userData);
+            setData({} as IAuthState);
+        } catch (error) {
+            Alert.alert("Erro ao logar", "Verifique seus dados");
+        }
+    };
 
     return (
-        <AuthContext.Provider value={{ user: data.user, signIn }}>
+        <AuthContext.Provider value={{ user: data.user, signIn, signOut }}>
             {children}
         </AuthContext.Provider>
     );
