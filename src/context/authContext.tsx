@@ -65,3 +65,12 @@ export const AuthProvider: React.FunctionComponent<IProps> = ({ children }) => {
         </AuthContext.Provider>
     );
 };
+
+export const useAuth = (): IAuthContext => {
+    const context = React.useContext(AuthContext);
+
+    if (!context) {
+        throw new Error("UseAuth deve ser usado em um auth Provider");
+    }
+    return context;
+};

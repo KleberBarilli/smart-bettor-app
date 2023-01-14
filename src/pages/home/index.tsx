@@ -12,8 +12,10 @@ import {
     Icon,
 } from "./styles";
 import avatarDefault from "../../assets/avatar1.png";
+import { useAuth } from "../../context/authContext";
 
 export const Home: React.FunctionComponent = () => {
+    const { user } = useAuth();
     return (
         <Container>
             <Header>
@@ -24,7 +26,7 @@ export const Home: React.FunctionComponent = () => {
                         </UserAvatarButton>
                         <UserInfoDetail>
                             <UserGreeting>Olá,</UserGreeting>
-                            <UserName>Kleber</UserName>
+                            <UserName>{user.name}</UserName>
                         </UserInfoDetail>
                     </UserInfo>
                     <Icon name="log-out" />
