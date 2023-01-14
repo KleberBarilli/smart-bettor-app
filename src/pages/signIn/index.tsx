@@ -1,5 +1,11 @@
 import React from "react";
-import { ScrollView, KeyboardAvoidingView, Platform, View } from "react-native";
+import {
+    ScrollView,
+    KeyboardAvoidingView,
+    Platform,
+    View,
+    Alert,
+} from "react-native";
 import { useForm, FieldValues } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
@@ -38,7 +44,8 @@ const formSchema = yup.object({
 });
 
 export const SignIn: React.FunctionComponent = () => {
-    const auth = React.useContext(AuthContext);
+    const { signIn } = React.useContext(AuthContext);
+    const [loading, setLoading] = React.useState(false);
 
     const {
         handleSubmit,
@@ -55,7 +62,14 @@ export const SignIn: React.FunctionComponent = () => {
             email: form.email,
             password: form.password,
         };
-        console.log(data);
+        setLoading(true);
+
+        try {
+            signIn(data);
+            Alert.alert("Ok", "Sucesso");
+        } catch (error) {
+            Alert.alert("Erro ao logar", "Verifique seus dados");
+        }
     };
 
     return (
@@ -101,6 +115,11 @@ export const SignIn: React.FunctionComponent = () => {
                             <Button
                                 title="Entrar"
                                 onPress={handleSubmit(handleSignIn)}
+                                disabled={
+                                    loading ||
+                                    (errors.password as unknown as boolean) ||
+                                    (errors.email as unknown as boolean)
+                                }
                             />
 
                             <ForgotPasswordButton>
