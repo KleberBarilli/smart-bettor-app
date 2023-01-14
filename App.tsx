@@ -11,6 +11,7 @@ import {
 
 import { Routes } from "./src/routes";
 import { AuthContext, AuthProvider } from "./src/context/authContext";
+import { StatusBar } from "react-native";
 
 const App: React.FunctionComponent = () => {
     const [isFontsLoaded] = useFonts({ Roboto_400Regular, Roboto_700Bold });
@@ -20,6 +21,7 @@ const App: React.FunctionComponent = () => {
     }
     return (
         <NavigationContainer>
+            <StatusBar backgroundColor="transparent" translucent />
             <ThemeProvider theme={theme}>
                 <AuthProvider>
                     <Routes />
