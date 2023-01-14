@@ -35,15 +35,15 @@ interface IFormInputs {
 }
 
 const formSchema = yup.object({
-    name: yup.string().required("O nome é obrigatório"),
-    email: yup
+    token: yup.number().min(6).max(6),
+    password: yup.string().required("A nova senha é obrigatória"),
+    passwordConfirm: yup
         .string()
-        .email("Email inválido")
-        .required("O email é obrigatório"),
-    password: yup.string().required("A senha é obrigatória"),
+        .oneOf([yup.ref("password"), null], "Confirmação incorreta")
+        .required("Confirme a senha"),
 });
 
-export const ForgotPassword: React.FunctionComponent = () => {
+export const ResetPassword: React.FunctionComponent = () => {
     const {
         control,
         handleSubmit,
@@ -54,22 +54,23 @@ export const ForgotPassword: React.FunctionComponent = () => {
 
     const { goBack, navigate } = useNavigation<ScreenNavigationProp>();
 
-    const handleForgotPassword = async (form: IFormInputs) => {
+    const handleResetPassword = async (form: IFormInputs) => {
         const data = {
-            email: form.email,
+            token: form.token,
+            password: form.password,
+            passwordConfirm: form.passwordConfirm,
         };
-        navigate("SignIn");
         try {
-            await api.post("/customer/auth/forgot-password", data);
+            await api.post("/customer/auth/reset-password", data);
             Alert.alert(
-                "Email enviado",
-                "Caso tenha uma conta cadastrada, ennviaremos um email de redefinição de senha",
+                "Senha alterada",
+                "A sua senha foi alterada com sucesso",
             );
-            navigate("ResetPassword");
+            navigate("SignIn");
         } catch (error) {
             Alert.alert(
-                "Erro ao recuperar a senha",
-                "Ocorreu um erro ao recuperar a senha",
+                "Erro ao redefinir a senha",
+                "Ocorreu um erro ao redefinir a senha",
             );
         }
     };
@@ -88,23 +89,44 @@ export const ForgotPassword: React.FunctionComponent = () => {
                     <Content>
                         <Logo source={logo} />
                         <View>
-                            <Title>Esqueci minha senha</Title>
+                            <Title>Redefinir Senha</Title>
                         </View>
 
                         <InputControl
-                            autoCapitalize="none"
-                            autoCorrect={false}
                             control={control}
-                            name="email"
-                            placeholder="Email"
-                            keyboardType="email-address"
+                            placeholder="Código"
+                            name="token"
+                            autoCorrect={false}
                             error={
-                                errors.email && (errors.email.message as string)
+                                errors.token && (errors.token.message as string)
+                            }
+                        />
+
+                        <InputControl
+                            control={control}
+                            name="password"
+                            placeholder="Senha"
+                            autoCorrect={false}
+                            secureTextEntry
+                            error={
+                                errors.password &&
+                                (errors.password.message as string)
+                            }
+                        />
+                        <InputControl
+                            control={control}
+                            name="confirmationPassword"
+                            placeholder="Confirme a senha"
+                            autoCorrect={false}
+                            secureTextEntry
+                            error={
+                                errors.passwordConfirm &&
+                                (errors.passwordConfirm.message as string)
                             }
                         />
                         <Button
-                            title="Recuperar Senha"
-                            onPress={handleSubmit(handleForgotPassword)}
+                            title="Alterar a senha"
+                            onPress={handleSubmit(handleResetPassword)}
                         />
                     </Content>
                 </Container>
