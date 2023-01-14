@@ -10,7 +10,7 @@ import {
 } from "@expo-google-fonts/roboto";
 
 import { Routes } from "./src/routes";
-import { AuthContext } from "./src/context/authContext";
+import { AuthContext, AuthProvider } from "./src/context/authContext";
 
 const App: React.FunctionComponent = () => {
     const [isFontsLoaded] = useFonts({ Roboto_400Regular, Roboto_700Bold });
@@ -21,9 +21,9 @@ const App: React.FunctionComponent = () => {
     return (
         <NavigationContainer>
             <ThemeProvider theme={theme}>
-                <AuthContext.Provider value={{ name: "Kleber" }}>
+                <AuthProvider>
                     <Routes />
-                </AuthContext.Provider>
+                </AuthProvider>
             </ThemeProvider>
         </NavigationContainer>
     );
