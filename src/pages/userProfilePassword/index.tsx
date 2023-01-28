@@ -44,7 +44,7 @@ const formSchema = yup.object({
 });
 
 export const UserProfilePassword: React.FunctionComponent = () => {
-    const { user, updateUser } = useAuth();
+    const { token } = useAuth();
     const {
         handleSubmit,
         control,
@@ -57,22 +57,28 @@ export const UserProfilePassword: React.FunctionComponent = () => {
 
     const handleUpdatePassword = async (form: IFormInputs) => {
         const data = {
-            name: user.name,
-            email: user.email,
             old_password: form.old_password,
             password: form.password,
             password_confirmation: form.password_confirmation,
         };
 
         try {
-            await api.patch("customer/auth/password", data);
+            const response = await api.patch("customer/password", data, {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            });
             Alert.alert("Senha atualizada", "Senha atualizada com sucesso.");
             goBack();
-        } catch (error) {
-            Alert.alert(
-                "Erro ao atualizar",
-                "Ocorreu um erro ao atualizar a senha. Tente novamente.",
-            );
+        } catch (error: any) {
+            if (error.response.data.error === "Senha atual inválida") {
+                Alert.alert("Erro ao atualizar", "Senha atual inválida.");
+            } else {
+                Alert.alert(
+                    "Erro ao atualizar",
+                    "Ocorreu um erro ao atualizar a senha. Tente novamente.",
+                );
+            }
         }
     };
 
@@ -101,6 +107,18 @@ export const UserProfilePassword: React.FunctionComponent = () => {
                             autoCorrect={false}
                             control={control}
                             secureTextEntry
+                            name="old_password"
+                            placeholder="Senha atual"
+                            error={
+                                errors.password &&
+                                (errors.password.message as string)
+                            }
+                        />
+                        <InputControl
+                            autoCapitalize="none"
+                            autoCorrect={false}
+                            control={control}
+                            secureTextEntry
                             name="password"
                             placeholder="Nova senha"
                             error={
@@ -124,11 +142,11 @@ export const UserProfilePassword: React.FunctionComponent = () => {
                         <Button
                             title="Salvar alterações"
                             onPress={handleSubmit(handleUpdatePassword)}
-                            disabled={
-                                !!errors.old_password ||
-                                !!errors.password ||
-                                !!errors.password_confirmation
-                            }
+                            // disabled={
+                            //     !!errors.old_password ||
+                            //     !!errors.password ||
+                            //     !!errors.password_confirmation
+                            // }
                         />
                     </Content>
                 </Container>

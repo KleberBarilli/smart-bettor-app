@@ -53,7 +53,6 @@ export const AuthProvider: React.FunctionComponent<IProps> = ({ children }) => {
             });
             const { token, user } = response.data;
 
-            console.log("token", token);
             await Promise.all([
                 AsyncStorage.setItem(tokenData, token),
                 AsyncStorage.setItem(userData, JSON.stringify(user)),
