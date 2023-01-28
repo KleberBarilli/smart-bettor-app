@@ -15,9 +15,15 @@ import {
 import avatarDefault from "../../assets/avatar1.png";
 import { useAuth } from "../../context/authContext";
 import { Alert } from "react-native";
+import { useNavigation } from "@react-navigation/native";
+
+interface ScreenNavigationProp {
+    navigate: (screen: string, params?: unknown) => void;
+}
 
 export const Home: React.FunctionComponent = () => {
     const { user, signOut } = useAuth();
+    const { navigate } = useNavigation<ScreenNavigationProp>();
 
     const handleSignOut = () => {
         Alert.alert("Tem certeza?", "Deseja sair da aplicação", [
@@ -32,12 +38,16 @@ export const Home: React.FunctionComponent = () => {
         ]);
     };
 
+    const handleUserProfile = () => {
+        navigate("UserProfile");
+    };
+
     return (
         <Container>
             <Header>
                 <UserWrapper>
                     <UserInfo>
-                        <UserAvatarButton onPress={() => console.log("sd")}>
+                        <UserAvatarButton onPress={handleUserProfile}>
                             <UserAvatar source={avatarDefault} />
                         </UserAvatarButton>
                         <UserInfoDetail>
