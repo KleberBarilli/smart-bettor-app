@@ -21,13 +21,12 @@ import {
     HeaderTitle,
     Icon,
     Title,
-    UserAvatar,
 } from "./styles";
 import { useAuth } from "../../context/authContext";
-import avatarDefault from "../../assets/avatar1.png";
 
 interface ScreenNavigationProp {
     goBack: () => void;
+    navigate: (screen: string) => void;
 }
 
 interface IFormInputs {
@@ -40,7 +39,7 @@ const formSchema = yup.object({
 });
 
 export const UserProfileEdit: React.FunctionComponent = () => {
-    const { user, updateUser } = useAuth();
+    const { user, updateUser, token } = useAuth();
     const {
         handleSubmit,
         control,
@@ -53,17 +52,27 @@ export const UserProfileEdit: React.FunctionComponent = () => {
         },
     });
 
-    const { goBack } = useNavigation<ScreenNavigationProp>();
+    const { goBack, navigate } = useNavigation<ScreenNavigationProp>();
 
     const handleProfileEdit = async (form: IFormInputs) => {
         const data = {
             name: form.name,
             email: form.email,
         };
-
         try {
-            const response = await api.put("customer/profile", data);
-            updateUser(response.data);
+            const response = await api.put(
+                "customer/profile",
+                {
+                    name: data.name,
+                },
+                {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    },
+                },
+            );
+
+            // updateUser(response.data);
             Alert.alert(
                 "Perfil atualizado",
                 "Os dados do seu perfil foram atualizados.",
@@ -122,7 +131,7 @@ export const UserProfileEdit: React.FunctionComponent = () => {
                         <Button
                             title="Salvar alterações"
                             onPress={handleSubmit(handleProfileEdit)}
-                            disabled={!!errors.name || !!errors.email}
+                            //disabled={!!errors.name || !!errors.email}
                         />
                     </Content>
                 </Container>

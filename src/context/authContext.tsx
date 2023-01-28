@@ -18,6 +18,7 @@ interface IAuthContext {
     signIn(credentials: ICredentials): void;
     signOut(): void;
     updateUser(user: IUser): void;
+    token: string;
 }
 
 interface IProps {
@@ -51,6 +52,8 @@ export const AuthProvider: React.FunctionComponent<IProps> = ({ children }) => {
                 password,
             });
             const { token, user } = response.data;
+
+            console.log("token", token);
             await Promise.all([
                 AsyncStorage.setItem(tokenData, token),
                 AsyncStorage.setItem(userData, JSON.stringify(user)),
@@ -81,7 +84,13 @@ export const AuthProvider: React.FunctionComponent<IProps> = ({ children }) => {
 
     return (
         <AuthContext.Provider
-            value={{ user: data.user, signIn, signOut, updateUser }}
+            value={{
+                user: data.user,
+                signIn,
+                signOut,
+                updateUser,
+                token: data.token,
+            }}
         >
             {children}
         </AuthContext.Provider>

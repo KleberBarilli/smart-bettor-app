@@ -45,7 +45,6 @@ const formSchema = yup.object({
 
 export const SignIn: React.FunctionComponent = () => {
     const { signIn } = useAuth();
-    const [loading, setLoading] = React.useState(false);
 
     const {
         handleSubmit,
@@ -62,7 +61,6 @@ export const SignIn: React.FunctionComponent = () => {
             email: form.email,
             password: form.password,
         };
-        setLoading(true);
 
         try {
             signIn(data);
@@ -115,7 +113,6 @@ export const SignIn: React.FunctionComponent = () => {
                                 title="Entrar"
                                 onPress={handleSubmit(handleSignIn)}
                                 disabled={
-                                    loading ||
                                     (errors.password as unknown as boolean) ||
                                     (errors.email as unknown as boolean)
                                 }
