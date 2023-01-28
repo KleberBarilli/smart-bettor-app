@@ -3,13 +3,11 @@ import * as SplashScreen from "expo-splash-screen";
 import { ThemeProvider } from "styled-components/native";
 import { NavigationContainer } from "@react-navigation/native";
 import theme from "./src/global/styles/theme";
-
 import {
     useFonts,
     Roboto_400Regular,
     Roboto_700Bold,
 } from "@expo-google-fonts/roboto";
-
 import { Routes } from "./src/routes";
 import { AuthProvider } from "./src/context/authContext";
 import { StatusBar } from "react-native";
