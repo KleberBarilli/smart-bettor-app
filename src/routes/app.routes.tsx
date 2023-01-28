@@ -2,6 +2,7 @@ import React from "react";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { Home } from "../pages/home";
 import { UserProfile } from "../pages/userProfile";
+import { UserProfileEdit } from "../pages/userProfileEdit";
 
 const App = createNativeStackNavigator();
 
@@ -13,6 +14,7 @@ export const AppRoutes: React.FunctionComponent = () => {
         >
             <App.Screen name="Home" component={Home} />
             <App.Screen name="UserProfile" component={UserProfile} />
+            <App.Screen name="UserProfileEdit" component={UserProfileEdit} />
         </App.Navigator>
     );
 };

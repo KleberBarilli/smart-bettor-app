@@ -11,25 +11,22 @@ import {
     Icon,
     NameData,
     NameTitle,
-    PhotoButton,
-    PhotoContainer,
-    UserAvatar,
     UserEmailDetail,
     UserNameDetail,
     HeaderTop,
 } from "./styles";
 
-import avatarDefault from "../../assets/avatar1.png";
 import { useAuth } from "../../context/authContext";
 import { Button } from "../../components/form/button";
 
 interface ScreenNavigationProp {
     goBack: () => void;
+    navigate: (screen: string) => void;
 }
 
 export const UserProfile: React.FunctionComponent = () => {
     const { user } = useAuth();
-    const { goBack } = useNavigation<ScreenNavigationProp>();
+    const { goBack, navigate } = useNavigation<ScreenNavigationProp>();
 
     return (
         <Container>
@@ -59,7 +56,10 @@ export const UserProfile: React.FunctionComponent = () => {
                     <EmailData>{user.email}</EmailData>
                 </UserEmailDetail>
 
-                <Button title="Editar dados do perfil" onPress={() => {}} />
+                <Button
+                    title="Editar dados do perfil"
+                    onPress={() => navigate("UserProfileEdit")}
+                />
                 <Button title="Trocar senha" onPress={() => {}} />
             </Content>
         </Container>
