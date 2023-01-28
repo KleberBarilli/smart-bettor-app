@@ -48,6 +48,7 @@
     "eslint-plugin-react": "^7.31.11",
     "eslint-plugin-react-hooks": "^4.6.0",
     "prettier": "^2.8.2",
+    "react-native-dotenv": "^3.4.7",
     "typescript": "^4.6.3"
   },
   "private": true
